@@ -1,0 +1,59 @@
+﻿@model IEnumerable<TodoApp_FrontEnd.Models.Todo>
+
+@{
+    ViewData["Title"] = "index";
+}
+<div class="d-flex justify-content-between">
+<h1>List of Todos</h1>
+<form>
+   <button type="submit" class="btn btn-danger">Logout</button>
+</form>
+</div>
+@if (ViewBag != null)
+{
+    <p> @ViewBag.Error</p>
+}
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.isCompleted)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.isCompleted)
+            </td>
+          
+            <td>
+                @Html.ActionLink("Edit", "Edit", new {_id=item._id }) |
+                    <form asp-action="Delete" method="post">
+                         <input type="hidden" name="_id" value="@item._id">
+                            <button type="submit">Delete</button>
+                    </form>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
